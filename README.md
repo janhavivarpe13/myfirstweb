@@ -1,2 +1,2 @@
 # myfirstweb
-A basic website which has registration , Login , dashboard using session, php, in Codeigniter3
+A basic website which has Registration , Login , Dashboard using session, php, in Codeigniter3
