@@ -18,7 +18,6 @@
       <?php if(!$this->session->has_userdata('authenticated')) { ?>
           <a class="nav-link active" aria-current="page" href="<?= base_url('/') ?>">Home</a>
         </li>
-        
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="<?= base_url('home') ?>">Register</a>
         </li>
