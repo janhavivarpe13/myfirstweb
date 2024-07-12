@@ -30,6 +30,13 @@
         </li>
 
         <?php if($this->session->has_userdata('authenticated') == TRUE) { ?>
+        <li class="nav-item">
+        <?php if (!empty($profilepic)): ?>
+        <img src="<?php echo base_url('images/') . $profilepic; ?>" alt="Pofile Picture" class="rounded-circle" style="width: 40px; height: 40px;">
+        <?php else: ?>
+          <img src="<?php echo base_url('images/1720080633download.png'); ?>" alt="Default Profile Picture" width="35" height="35" class="rounded-circle">
+        <?php endif; ?>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <?php echo ucfirst($_SESSION['Fname']) ?>
@@ -39,6 +46,7 @@
             <a class="dropdown-item" href="<?= base_url('logout') ?>">Logout</a>
           </div>
         </li>
+        
         <?php }?>
       </ul>
       

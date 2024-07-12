@@ -13,6 +13,13 @@ class Dash extends CI_Controller{
         $this->load->view('dash');
         $this->load->view('templates/footer.php');
 
+       
+        $id = $this->session->userdata('id');
+        $user_data= $this->UserModel->get_profile($id);
+        $data['users'] = $user_data;
+        $data['profilepic'] = $user_data['pp'];
+        $this->load->view('templates/navbar',$data);
+
 
         $id = $this->session->userdata('id');
         $user_data= $this->UserModel->fetch($id);

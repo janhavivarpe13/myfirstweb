@@ -3,6 +3,12 @@
 class UserModel extends CI_Model{
 
 
+    public function get_profile($id){
+        $this->db->select('pp');
+        $this->db->where('id', $id);
+        $query = $this->db->get('Users');
+        return $query->row_array('pp');
+    }
     public function fetch($id)
     {
         $query = $this->db->get_where('Users', array('id' => $id));        
