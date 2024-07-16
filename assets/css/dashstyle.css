@@ -1,0 +1,25 @@
+*{
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+body{
+    
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: linear-gradient(#f069b3,#ac9ed4);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.modal-content{
+  display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+.btncontainer{
+  text-align: right;
+}

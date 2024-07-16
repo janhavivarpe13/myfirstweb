@@ -1,98 +1,101 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>User Profile</title>
-<style>
-*{
-    font-family: sans-serif;
-    box-sizing: border-box;
-}
-body{
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://localhost/demo/assets/css/dashstyle.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: linear-gradient(#f069b3,#ac9ed4);
-}
-.hero{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.container{
-    width: 500px;
-    background: #fff;
-    padding: 50px;
-    border-radius: 15px;
-    text-align: center;
-    color: #333;
-}
-.container h1{
-    font-weight: 500;
-    color: #000;
-}
-.container img{
-    width: 200px;
-    border-radius: 100%;
-    margin-top: 40px;
-    margin-bottom: 40px;
-    align-items: center;
-    
-}
-.button{
-    background-color: transparent;
-    border: none;
-    color: inherit;
-    cursor: pointer;
-    font-size: 16px;
-    padding: 50px;
-    text-align: center;
-    display: inline-block;
-    border-radius: 4px;
-    align-items: center;
-    
-
-}
-.logout-btn {
-    background-color:white; 
-    color: black;
-    font-weight: bold;
-   
-}
-
-.logout-btn:hover {
-    background-color: palevioletred;
-}
-</style>
+    <title>Dashboard</title>
 </head>
 <body>
+ 
+  <div class="container">
+    <div class="clear-fix">
+    <h3>Todo Lists!</h3>
+    <a href="#" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#exampleModal">Add Task</a>
+    </div>
+    <table class="table table-bordered" >
+      <thead>
+      <tr>
+       <th>ID</th>
+          <th>Tasks</th>
+          <th>Start-Date</th>
+          <th>End-Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+          
+      </tr>
+      </thead>
+        <tbody>
+          <?php foreach($tasks_data as $task): ?>
+            <tr>
+              <td><?php echo $task->id;?></td>
+              <td><?php echo $task->tname;?></td>
+              <td><?php echo $task->startD;?></td>
+              <td><?php echo $task->endD;?></td>
+              <td><?php echo $task->Status;?></td>
+              <td>
+                <a href="<?php echo base_url();?>dash/edit/<?php echo $task->id; ?>" class="btn btn-success"  >Edit</a>
+                <a href="<?php echo base_url();?>dash/delete/<?php echo $task->id;?>" class="btn btn-danger" >Delete</a>
+              </td>
 
+            </tr>
 
-<div class="hero">
-
-<div class="container">
+            <?php endforeach; ?>
+        </tbody>
+      </table>
+  
+  </div>
+  
+   
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form method="POST" action="<?php echo base_url('dash/addtasks')?>">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div class="form-group">
+      <label>Task Name:</label>
+      <input type="text" id="task_name" name="task_name" >
+      </div><br>
+      <div class="form-group">
+      <label for="start_date">Start Date:</label>
+      <input type="date" id="start_date" name="start_date">
+      </div><br>
+      <div class="form-group">
+      <label for="end_date">End Date:</label>
+      <input type="date" id="end_date" name="end_date">
+      </div><br>
+      <div class="form-group">
+      <label for="status">Status:</label>
+      <select id="status" name="status">
+        <option value="Pending">Pending</option>
+        <option value="In-process">In-process</option>
+        <option value="Completed">Completed</option>
+      </select>
+      </div><br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" name="insert" value="AddTask" class="btn btn-info">
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 <?php if($this->session->flashdata("status")): ?>
-        <div class="alert alert-success" >
-            <?= $this->session->flashdata("status"); ?>
-        </div>
-        <?php endif; ?> 
-       
-    <h1> <center>Welcome <?php echo ucfirst($_SESSION['Fname']) ?></center> </h1>
-    
-    
-    <?php if (!empty($profilepic)): ?>
-        
-        <img src="<?php echo base_url('images/') . $profilepic; ?>" alt="Pofile Picture" width="200" height="200">
-    <?php else: ?>
-        <p>No profile picture here.</p>
-    <?php endif; ?>
-
-</div>
-</div>
+  <div align="center" style="color: #FFF" class="bg-success" >
+    <?= $this->session->flashdata("status"); ?>
+  </div>
+<?php endif; ?>  
 
 </body>
 </html>
