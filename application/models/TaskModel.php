@@ -3,46 +3,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class TaskModel extends CI_Model{
 
-    public function gettask($data){
+    public function get_task_id($id){
+        return $this->db->get_where('Tasks', array('id'=> $id))->result_array();
 
-        return $this->db->insert('Tasks',$data);
     }
 
-    public function getdata(){
+
+
+    
+    public function getdata($id){
         $this->db->select('*');
         $this->db->from('Tasks');
-        $query = $this->db->get()->result();
-        return $query;
+        $this->db->where('users_id',$id);
+        $query = $this->db->get();
+        if($query->num_rows() > 0){
+            return $query->result();
+        }else{
+            return array();
+        }
+        
     }
 
+    public function gettask($data){
+        $this->db->insert('Tasks',$data);
+        return $this->db->insert_id();
+        
+    }
+
+
     public function getsinglet($id){
-        $this->db->where('id',$id);
-        $query = $this->db->get('Tasks');
-        if($query){
-            return $query->row();
-        }
-       
+        $query = $this->db->get_where('Tasks',array('id'=> $id));
+        return $query->row();    
     }
 
     public function updatedata($data, $id){
         $this->db->where('id',$id);
-        $query =$this->db->update('Tasks',$data);
-        if($query){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return $this->db->update('Tasks',$data);
     }
     public function deletedata($id){
-        $this->db->where('id',$id);
-        $query=$this->db->delete('Tasks');
-        if($query){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return $this->db->delete('Tasks',array('id'=> $id));
+        
     }
 
 }

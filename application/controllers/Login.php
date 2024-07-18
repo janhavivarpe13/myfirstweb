@@ -40,12 +40,12 @@ class Login extends CI_Controller{
             if($result)
             {
                 $userdata=[
-                    'id' => $result->id,
                     'Fname'=>$result->Fname,
                     'Lname'=> $result->Lname,
                     'authenticated' => TRUE
                 ];
                 $this->session->set_userdata($userdata);
+                $this->session->set_userdata('users_id',$result);
                 redirect('dash');
             }
             else{

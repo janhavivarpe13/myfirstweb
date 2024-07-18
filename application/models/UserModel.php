@@ -4,14 +4,25 @@ class UserModel extends CI_Model{
 
 
     public function get_profile($id){
-        $this->db->select('pp');
-        $this->db->where('id', $id);
-        $query = $this->db->get('Users');
-        return $query->row_array('pp');
+       $this->db->select('pp');
+       $this->db->where('users_id',$id);
+       $query= $this->db->get('Users');
+       $result = $query->row_array();
+
+       return $result['pp'];
+    }
+
+    public function get_user_info($id){
+        $query = $this->db->get_where('Users',array('users_id'=>$id));
+        return $query->row_array();
+    }
+
+    public function get_user_id($id){
+        return $this->db->get_where('Users',array('users_id'=>$id))->row_array();
     }
     public function fetch($id)
     {
-        $query = $this->db->get_where('Users', array('id' => $id));        
+        $query = $this->db->get_where('Users', array('users_id' => $id));        
         return $query->row_array();
     }
 
@@ -25,7 +36,7 @@ class UserModel extends CI_Model{
         $this->db->limit(1);
         $query = $this->db->get();
         if($query->num_rows() ==1){
-            return $query->row();
+            return $query->row()->users_id;
         }else{
             return false;
         }
