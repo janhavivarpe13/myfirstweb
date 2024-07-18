@@ -10,17 +10,16 @@ class Dash extends CI_Controller{
         $this->load->model('TaskModel');
     }
     public function index(){
+        /*
+        echo"<pre>";
+        print_r($data);
+        echo "<pre>";
+        die();
 
-        
-
-
-        $id = $this->session->userdata('id');
-        $user_data= $this->UserModel->get_profile($id);
-        $data['users'] = $user_data;
-        $data['profilepic'] = $user_data['pp'];
-        $this->load->view('templates/navbar',$data);
-        
-        $data['tasks_data']= $this->TaskModel->getdata();
+        */
+    
+        $id = $this->session->userdata('users_id');
+        $data['tasks_data']= $this->TaskModel->getdata($id);
 
         $this->load->view('templates/header.php');
         $this->load->view('dash', $data);
@@ -31,28 +30,20 @@ class Dash extends CI_Controller{
        
        //echo "<pre>"; print_r($data); die();
 
-    
 
     }
 
     public function addtasks(){
 
-        /*
-        echo"<pre>";
-        print_r($data);
-        echo "<pre>";
-        die();
-
-        */
-
+       
         $data= [
+            'users_id'=>$this->session->userdata('users_id'),
             'tname'=>$this->input->post('task_name'),
             'startD'=>$this->input->post('start_date'),
             'endD'=>$this->input->post('end_date'),
             'Status'=>$this->input->post('status'),
 
         ];
-        
         $result= $this->TaskModel->gettask($data);
         if($result){
             $this->session->set_flashdata('status','Task added Successfully!');

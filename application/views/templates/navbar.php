@@ -31,17 +31,15 @@
 
         <?php if($this->session->has_userdata('authenticated') == TRUE) { ?>
         <li class="nav-item">
-        <?php if (!empty($profilepic)): ?>
-        <img src="<?php echo base_url('images/') . $profilepic; ?>" alt="Pofile Picture" class="rounded-circle" style="width: 40px; height: 40px;">
-        <?php else: ?>
-          <img src="<?php echo base_url('images/1720080633download.png'); ?>" alt="Default Profile Picture" width="35" height="35" class="rounded-circle">
-        <?php endif; ?>
+        <?php $profilepic = $this->UserModel->get_profile($this->session->userdata('users_id')); ?>
+        <img src="<?php echo base_url('images/' . $profilepic); ?>"alt="Profile Picture" class="rounded-circle" style="width: 32px; height: 32px;">
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <?php echo ucfirst($_SESSION['Fname']) ?>
-          <?php echo ucfirst($_SESSION['Lname']) ?>
+          <?php $usernames = $this->UserModel->get_user_info($this->session->userdata('users_id')); ?>
+          <?php echo ucfirst($usernames['Fname']. ' '. $usernames['Lname']); ?>
           </a>
+          
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="<?= base_url('logout') ?>">Logout</a>
           </div>
