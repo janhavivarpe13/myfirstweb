@@ -3,14 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class TaskModel extends CI_Model{
 
-    public function get_task_id($id){
-        return $this->db->get_where('Tasks', array('id'=> $id))->result_array();
 
-    }
-
-
-
-    
     public function getdata($id){
         $this->db->select('*');
         $this->db->from('Tasks');
