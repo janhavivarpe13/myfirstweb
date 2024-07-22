@@ -12,11 +12,17 @@
 <body>
 
   <div class="container">
-    <div class="clear-fix">
-    <h3>Todo Lists!</h3>
-    <a href="#" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#exampleModal">Add Task</a>
-    </div>
-    <table class="table table-bordered" >
+    <div class="row" >
+      <div class="col-md-12 mt-4" >
+        <div class="card" >
+          <div class="card-header" >
+            <h5>
+              Todo List!
+              <a href="#" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#exampleModal">Add Task</a>
+            </h5>
+          </div>
+          <div class="card-body" >
+          <table class="table table-bordered" >
       <thead>
       <tr>
        <th>ID</th>
@@ -31,7 +37,7 @@
         <tbody>
           <?php foreach($tasks_data as $task): ?>
             <tr>
-              <td><?php echo $task->id;?></td>
+              <td><?php echo $task->sequential;?></td>
               <td><?php echo $task->tname;?></td>
               <td><?php echo $task->startD;?></td>
               <td><?php echo $task->endD;?></td>
@@ -46,8 +52,16 @@
             <?php endforeach; ?>
         </tbody>
       </table>
-  
-  </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+    </div>
+   
   
    
 <!-- Modal -->

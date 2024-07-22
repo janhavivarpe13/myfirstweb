@@ -8,6 +8,7 @@ class Dash extends CI_Controller{
         $this->load->model('Authentication');
         $this->load->model('UserModel');
         $this->load->model('TaskModel');
+       
     }
     public function index(){
         /*
@@ -16,11 +17,29 @@ class Dash extends CI_Controller{
         echo "<pre>";
         die();
 
-        */
-    
+        
+        $id=1;
+        $this->load->library('pagination');
+        $config = array() ;
+        $config['base_url'] = base_url().'dash/index';
+        $config['total_rows'] = $this->TaskModel->count_tasks($id) ;
+        $config['per_page'] = 5;
+        $config["uri_segment"] = 3; 
+        $config['use_page_numbers'] = TRUE;
+      
+        $this->pagination->initialize($config);
+        
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $offset = $page * $config["per_page"];
+
+        $id = $this->session->userdata('users_id');
+        $data['tasks_data']= $this->TaskModel->getdata($id,$config['per_page'],$offset);
+        $data['links'] = $this->pagination->create_links();
+        
+*/
+
         $id = $this->session->userdata('users_id');
         $data['tasks_data']= $this->TaskModel->getdata($id);
-
         $this->load->view('templates/header.php');
         $this->load->view('dash', $data);
         $this->load->view('templates/footer.php');
