@@ -10,12 +10,21 @@ class TaskModel extends CI_Model{
         $this->db->where('users_id',$id);
         $query = $this->db->get();
         if($query->num_rows() > 0){
-            return $query->result();
+
+            $index = 1;
+            $result =  $query->result();
+            foreach($result as $row){
+                $row->sequential = $index;
+                $index++;
+            }
+            return $result;
         }else{
             return array();
         }
         
     }
+   
+    
 
     public function gettask($data){
         $this->db->insert('Tasks',$data);
