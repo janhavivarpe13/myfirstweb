@@ -27,7 +27,7 @@ class Dash extends CI_Controller{
 
         $config['full_tag_open'] = "<ul class='pagination'>";
         $config['full_tag_close'] = "</ul>";
-
+       
         $config['prev_tag_open'] = "<li class='page-item'>";
         $config['prev_tag_close'] = "</li>";
    
