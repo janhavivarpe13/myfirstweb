@@ -56,7 +56,6 @@ $route['login']['GET'] = 'Login/index';
 $route['login']['POST'] = 'Login/login';
 $route['dash']['GET']='Dash/index';
 $route['dash']['POST'] = 'Dash/addtasks';
-//$route['dash']['POST'] = 'Dash/edit/$1';
 $route['logout']['GET'] = 'Logout/logout';
 
 $route['404_override'] = '';

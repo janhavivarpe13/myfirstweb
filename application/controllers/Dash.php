@@ -9,6 +9,7 @@ class Dash extends CI_Controller{
         $this->load->model('UserModel');
         $this->load->model('TaskModel');
        
+       
     }
     public function index(){
         /*
@@ -17,30 +18,38 @@ class Dash extends CI_Controller{
         echo "<pre>";
         die();
 
-        
-        $id=1;
-        $this->load->library('pagination');
-        $config = array() ;
-        $config['base_url'] = base_url().'dash/index';
-        $config['total_rows'] = $this->TaskModel->count_tasks($id) ;
-        $config['per_page'] = 5;
-        $config["uri_segment"] = 3; 
-        $config['use_page_numbers'] = TRUE;
-      
-        $this->pagination->initialize($config);
-        
-        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $offset = $page * $config["per_page"];
-
-        $id = $this->session->userdata('users_id');
-        $data['tasks_data']= $this->TaskModel->getdata($id,$config['per_page'],$offset);
-        $data['links'] = $this->pagination->create_links();
-        
 */
+        $this->load->library('pagination');
+        $config = array();
+        $config['base_url'] = base_url('dash/index/'); // Replace with your actual controller and method
+        $config['per_page'] = 5; // Number of records per page
+        $config['total_rows'] = $this->TaskModel->count_tasks(); 
+
+        $config['full_tag_open'] = "<ul class='pagination'>";
+        $config['full_tag_close'] = "</ul>";
+
+        $config['prev_tag_open'] = "<li class='page-item'>";
+        $config['prev_tag_close'] = "</li>";
+   
+        $config['cur_tag_open'] = "<li class='page-item active'><a class='page-link'>";
+        $config['cur_tag_close'] = "</li>";
+
+        $config['next_tag_open'] = "<li class='page-item'>";
+        $config['next_tag_close'] = "</li>";
+        $config['attributes'] = array('class' => 'page-link');
+
+
+        $this->pagination->initialize($config);
+
+        
 
         $id = $this->session->userdata('users_id');
-        $data['tasks_data']= $this->TaskModel->getdata($id);
-        $this->load->view('templates/header.php');
+        $data['tasks_data']= $this->TaskModel->getdata($id,$config['per_page'],$this->uri->segment(3));
+        $data['links'] = $this->pagination->create_links(); 
+        
+
+      
+       $this->load->view('templates/header.php');
         $this->load->view('dash', $data);
         $this->load->view('templates/footer.php');
 
@@ -51,6 +60,8 @@ class Dash extends CI_Controller{
 
 
     }
+
+    
 
     public function addtasks(){
 

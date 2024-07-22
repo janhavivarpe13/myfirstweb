@@ -52,7 +52,10 @@
             <?php endforeach; ?>
         </tbody>
       </table>
-
+     
+      <div class="pagination">
+        <?php echo $links; ?>
+      </div>
           </div>
 
         </div>
