@@ -4,10 +4,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class TaskModel extends CI_Model{
 
 
-    public function getdata($id){
+    public function getdata($id,$limit, $offset){
         $this->db->select('*');
         $this->db->from('Tasks');
         $this->db->where('users_id',$id);
+        $this->db->limit($limit,$offset);
         $query = $this->db->get();
         if($query->num_rows() > 0){
 
@@ -24,6 +25,9 @@ class TaskModel extends CI_Model{
         
     }
    
+    public function count_tasks() {
+        return $this->db->count_all_results('Tasks');
+    }
     
 
     public function gettask($data){
