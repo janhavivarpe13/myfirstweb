@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="http://localhost/demo/assets/css/dashstyle.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
+
     <title></title>
 	<style>
         .centered-form {
@@ -19,44 +20,93 @@
 </head>
 <body>
  
-  <div class="container">
-    <div class="clear-fix">
-   <h3 align="center">Edit Task</h3>
-   <div class="centered-form">
-   <form method="POST" action="<?php echo base_url();?>dash/update/<?php echo $singlet->id;?>" >
+  <!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+   <form id="editForm" method="POST" action="<?php echo base_url('dash/update');?> ">
+    <input type="hidden" id="update_id" name="update_id"  >
       <div class="form-group">
       <label>Task Name:</label>
-      <input type="text" id="task_name" name="task_name" value="<?php echo $singlet->tname; ?>"  >
+      <input type="text" id="task_name" name="task_name"  >
+      </div><br>
+      <div class="form-group">
+      <label>AssignedBy:</label>
+      <input type="email" id="assign" name="assign"  >
       </div><br>
       <div class="form-group">
       <label for="start_date">Start Date:</label>
-      <input type="date" id="start_date" name="start_date" value="<?php echo $singlet->startD; ?>" >
+      <input type="date" id="start_date" name="start_date"  >
       </div><br>
       <div class="form-group">
       <label for="end_date">End Date:</label>
-      <input type="date" id="end_date" name="end_date" value="<?php echo $singlet->endD; ?>" >
+      <input type="date" id="end_date" name="end_date"  >
       </div><br>
       <div class="form-group">
       <label for="status">Status:</label>
-      <select id="status" name="status">
+      <select id="status" name="status"  >
         <option value="Pending">Pending</option>
         <option value="In-process">In-process</option>
         <option value="Completed">Completed</option>
       </select>
       </div><br>
-	  <input type="submit" name="edit" value="update" class="btn btn-info">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit"  name="edit" value="update" class="btn btn-primary">update</button>
+        
+      </div>
       </div>
       </div>
       </form>
-
-	  </div>
+      </div>
+      </div>
+      
+      </div>
     </div>
-</div>
-
-<?php if($this->session->flashdata("status")): ?>
-  <div align="center" style="color: #FFF" class="bg-success" >
-    <?= $this->session->flashdata("status"); ?>
   </div>
-<?php endif; ?>
+  
+    <!-- Include jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+        $(document).ready(function() {
+            // Triggered when edit button is clicked
+            $('.edit-btn').click(function() {
+                // Fetch data attributes from the clicked button
+                var id = $(this).data('id');
+                var taskname = $(this).data('taskname');
+                var assignby = $(this).data('assignby');
+                var startdate = $(this).data('startdate');
+                var enddate = $(this).data('enddate');
+                var status = $(this).data('status');
+
+                // Set values to modal form fields
+                $('#update_id').val(id);
+                $('#task_name').val(taskname);
+                $('#assign').val(assignby);
+                $('#start_date').val(startdate);
+                $('#end_date').val(enddate);
+                $('#status').val(status);
+
+                // Show the edit modal
+                $('#editModal').modal('show');
+            });
+        });
+    </script>
+
+
 </body>
 </html>
+
+
+
+     
+      

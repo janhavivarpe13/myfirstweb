@@ -65,24 +65,48 @@ class Dash extends CI_Controller{
 
     public function addtasks(){
 
-       
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('task_name','Taskname','required');
+        $this->form_validation->set_rules('assign','Assign','required|valid_email');
+        $this->form_validation->set_rules('start_date','startdate','required');
+        $this->form_validation->set_rules('end_date','enddate','required');
+        $this->form_validation->set_rules('status','status', 'required');
+
+        if($this->form_validation->run() == FALSE){
+            $data_error = [
+
+                "error" => validation_errors()
+            ];
+
+            $this->session->set_flashdata($data_error);
+
+        }
+        else{
+
         $data= [
             'users_id'=>$this->session->userdata('users_id'),
             'tname'=>$this->input->post('task_name'),
+            'Assignby'=>$this->input->post('assign'),
             'startD'=>$this->input->post('start_date'),
             'endD'=>$this->input->post('end_date'),
             'Status'=>$this->input->post('status'),
+            
 
         ];
         $result= $this->TaskModel->gettask($data);
         if($result){
             $this->session->set_flashdata('status','Task added Successfully!');
-                redirect(base_url('dash'));"";
+                redirect(base_url('dash'));
         }
         else{
             $this->session->set_flashdata('status','Failed!');
                 redirect(base_url('dash'));
         }
+
+        }
+        redirect('dash');
+
+       
     }
 
     public function edit($id){
@@ -91,25 +115,34 @@ class Dash extends CI_Controller{
         $this->load->view('edittask',$data);
     }
 
-    public function update($id){
+    public function update(){
 
-        $data= [
-            'tname'=>$this->input->post('task_name'),
-            'startD'=>$this->input->post('start_date'),
-            'endD'=>$this->input->post('end_date'),
-            'Status'=>$this->input->post('status'),
+            $task_id = $this->input->post('update_id');
+            $data= [
+                'tname'=>$this->input->post('task_name'),
+                'Assignby'=>$this->input->post('assign'),
+                'startD'=>$this->input->post('start_date'),
+                'endD'=>$this->input->post('end_date'),
+                'Status'=>$this->input->post('status'),
+            ];
 
-        ];
-        
-        $result= $this->TaskModel->updatedata($data, $id);
-        if($result){
-            $this->session->set_flashdata('status','Task Updated Successfully!');
-                redirect(base_url('dash'));"";
-        }
-        else{
-            $this->session->set_flashdata('status','Failed!');
-                redirect(base_url('dash'));
-        }
+            
+            
+            $result= $this->TaskModel->updatedata($data,$task_id);
+           
+            if($result){
+                $this->session->set_flashdata('status','Task Updated Successfully!');
+                    redirect(base_url('dash'));
+            }
+            else{
+                $this->session->set_flashdata('status','Failed!');
+                    redirect(base_url('dash'));
+            }
+
+
+       
+
+       
     }
 
     public function delete($id){
@@ -121,8 +154,7 @@ class Dash extends CI_Controller{
 
     }
 
- 
-    
+   
     
 
     
