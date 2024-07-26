@@ -5,14 +5,12 @@ class TaskModel extends CI_Model{
 
 
     public function getdata($id,$limit, $offset){
-        $this->db->select('*');
-        $this->db->from('Tasks');
         $this->db->where('users_id',$id);
         $this->db->limit($limit,$offset);
-        $query = $this->db->get();
+        $query = $this->db->get('Tasks');
         if($query->num_rows() > 0){
 
-            $index = 1;
+            $index = $offset + 1;
             $result =  $query->result();
             foreach($result as $row){
                 $row->sequential = $index;
@@ -26,6 +24,8 @@ class TaskModel extends CI_Model{
     }
    
     public function count_tasks() {
+        $id = $this->session->userdata('users_id');
+        $this->db->where('users_id', $id);
         return $this->db->count_all_results('Tasks');
     }
     
