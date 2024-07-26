@@ -20,10 +20,12 @@ class Dash extends CI_Controller{
 
 */
         $this->load->library('pagination');
+       
         $config = array();
         $config['base_url'] = base_url('dash/index/'); // Replace with your actual controller and method
         $config['per_page'] = 5; // Number of records per page
-        $config['total_rows'] = $this->TaskModel->count_tasks(); 
+        $total_tasks = $this->TaskModel->count_tasks();
+        $config['total_rows'] = $total_tasks;
 
         $config['full_tag_open'] = "<ul class='pagination'>";
         $config['full_tag_close'] = "</ul>";
@@ -41,13 +43,18 @@ class Dash extends CI_Controller{
 
         $this->pagination->initialize($config);
 
-        
+        $page = $this->uri->segment(3) ? $this->uri->segment(3) : 0;
 
         $id = $this->session->userdata('users_id');
-        $data['tasks_data']= $this->TaskModel->getdata($id,$config['per_page'],$this->uri->segment(3));
-        $data['links'] = $this->pagination->create_links(); 
         
+        $data['tasks_data']= $this->TaskModel->getdata($id,$config['per_page'],$page);
 
+        
+        $data['links'] = $this->pagination->create_links();
+        $data['total_tasks'] = $total_tasks;
+        
+        $data['config']= $config;
+       
       
        $this->load->view('templates/header.php');
         $this->load->view('dash', $data);

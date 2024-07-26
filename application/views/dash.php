@@ -66,25 +66,20 @@
             <?php endforeach; ?>
         </tbody>
       </table>
-     
-      <div class="pagination">
+      
+      <?php if (!empty($links) && $total_tasks > $config['per_page']):?>
         <?php echo $links; ?>
-      </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-    </div>
+      <?php endif; ?>
+</div>
+</div>
+</div>
+</div>
+</div>
     <?php
 // Include edit.php to bring in the modal form
 include 'edittask.php';
 ?>
-   
   
-   
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
