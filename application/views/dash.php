@@ -133,7 +133,6 @@ include 'edittask.php';
 
 
 <?php if($this->session->flashdata('error')): ?>
-
   <div align="center" style="color: #FFF" class="bg-danger">
   <?php echo $this->session->flashdata('error'); ?>
   </div>
